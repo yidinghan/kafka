@@ -1,6 +1,6 @@
 ISTANBUL = ./node_modules/.bin/istanbul
 ESLINT = ./node_modules/.bin/eslint
-MOCHA = ./node_modules/.bin/mocha
+MOCHA = ./node_modules/.bin/_mocha
 
 all: lint test coverage
 
