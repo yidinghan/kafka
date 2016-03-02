@@ -6,7 +6,7 @@ all: lint test coverage
 
 # Tests
 test:
-	@$(ISTANBUL) cover --report lcov --report text --report html $(MOCHA) -- --recursive
+	@$(ISTANBUL) cover --report lcov --report text --report html $(MOCHA)
 
 # Check code style
 lint:
