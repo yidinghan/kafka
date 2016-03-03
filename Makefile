@@ -1,12 +1,13 @@
 ISTANBUL = ./node_modules/.bin/istanbul
 ESLINT = ./node_modules/.bin/eslint
 MOCHA = ./node_modules/.bin/_mocha
+TESTS = $(shell find test/$(target) -name "*.js")
 
 all: lint test coverage
 
 # Tests
 test:
-	@$(ISTANBUL) cover --report lcov --report text --report html $(MOCHA)
+	@$(ISTANBUL) cover --report lcov --report text --report html $(MOCHA) -- $(TESTS)
 
 # Check code style
 lint:

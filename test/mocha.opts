@@ -1,3 +1,4 @@
+--timeout 6666
 --reporter spec
 --require test/globals
 --recursive
