@@ -151,6 +151,7 @@ producer.send({
   * `size` - group messages together into single batch until their total size exceeds this value, defaults to 16384 bytes. Set to 0 to disable batching.
   * `maxWait` - send grouped messages after this amount of milliseconds expire even if their total size doesn't exceed `batch.size` yet, defaults to 10ms. Set to 0 to disable batching.
 * `asyncCompression` - boolean, use asynchronouse compression instead of synchronous, defaults to `false`
+* `leaderNotfoundOK` - boolean, whether use first broker as leader when there isn't leader of given topic and partition, defaults to `false`
 
 ## SimpleConsumer
 
