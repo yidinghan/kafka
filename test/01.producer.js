@@ -2,7 +2,7 @@
 
 /* global describe, it, before, after, sinon, expect  */
 
-// kafka-topics.sh --zookeeper 127.0.0.1:2181/kafka0.9 --create --topic kafka-test-topic --partitions 3 --replication-factor 1
+// kafka-topics.sh --zookeeper 127.0.0.1:2181/kafka0.9 --create --topicCANSTANTS.TEST_TOPIC --partitions 3 --replication-factor 1
 
 var Promise = require('bluebird');
 var Kafka   = require('../lib/index');
@@ -34,7 +34,7 @@ describe('Producer', function () {
 
     it('should send a single message', function () {
         return producer.send({
-            topic: 'kafka-test-topic',
+            topic: CST.TEST_TOPIC,
             partition: 0,
             message: {
                 value: 'Hello!'
@@ -42,7 +42,7 @@ describe('Producer', function () {
         }).then(function (result) {
             result.should.be.an('array').and.have.length(1);
             result[0].should.be.an('object');
-            result[0].should.have.property('topic', 'kafka-test-topic');
+            result[0].should.have.property('topic', CST.TEST_TOPIC);
             result[0].should.have.property('partition', 0);
             result[0].should.have.property('offset').that.is.a('number');
             result[0].should.have.property('error', null);
@@ -51,7 +51,7 @@ describe('Producer', function () {
 
     it('should send a single keyed message', function () {
         return producer.send({
-            topic: 'kafka-test-topic',
+            topic: CST.TEST_TOPIC,
             partition: 0,
             message: {
                 key: 'test-key',
@@ -60,7 +60,7 @@ describe('Producer', function () {
         }).then(function (result) {
             result.should.be.an('array').and.have.length(1);
             result[0].should.be.an('object');
-            result[0].should.have.property('topic', 'kafka-test-topic');
+            result[0].should.have.property('topic', CST.TEST_TOPIC);
             result[0].should.have.property('partition', 0);
             result[0].should.have.property('offset').that.is.a('number');
             result[0].should.have.property('error', null);
@@ -78,7 +78,7 @@ describe('Producer', function () {
 
     it('should fail when missing partition field and no partitioner function defined', function () {
         return producer.send({
-            topic: 'kafka-test-topic',
+            topic: CST.TEST_TOPIC,
             message: {
                 value: 'Hello!'
             }
@@ -87,11 +87,11 @@ describe('Producer', function () {
 
     it('should send an array of messages', function () {
         var msgs = [{
-            topic: 'kafka-test-topic',
+            topic: CST.TEST_TOPIC,
             partition: 1,
             message: { value: 'Hello!' }
         }, {
-            topic: 'kafka-test-topic',
+            topic: CST.TEST_TOPIC,
             partition: 2,
             message: { value: 'Hello!' }
         }];
@@ -99,11 +99,11 @@ describe('Producer', function () {
             result.should.be.an('array').and.have.length(2);
             result[0].should.be.an('object');
             result[1].should.be.an('object');
-            result[0].should.have.property('topic', 'kafka-test-topic');
+            result[0].should.have.property('topic', CST.TEST_TOPIC);
             result[0].should.have.property('error', null);
             result[0].should.have.property('partition').that.is.a('number');
             result[0].should.have.property('offset').that.is.a('number');
-            result[1].should.have.property('topic', 'kafka-test-topic');
+            result[1].should.have.property('topic', CST.TEST_TOPIC);
             result[1].should.have.property('partition').that.is.a('number');
             result[1].should.have.property('offset').that.is.a('number');
             result[1].should.have.property('error', null);
@@ -117,7 +117,7 @@ describe('Producer', function () {
             partition: 0,
             message: { value: 'Hello!' }
         }, {
-            topic: 'kafka-test-topic',
+            topic: CST.TEST_TOPIC,
             partition: 20,
             message: { value: 'Hello!' }
         }];
@@ -146,7 +146,7 @@ describe('Producer', function () {
         });
         return _producer.init().then(function () {
             return _producer.send({
-                topic: 'kafka-test-topic',
+                topic: CST.TEST_TOPIC,
                 message: {
                     value: 'Hello!'
                 }
@@ -154,7 +154,7 @@ describe('Producer', function () {
         })
         .then(function () {
             partitionerSpy.should.have.been.called; // eslint-disable-line
-            partitionerSpy.lastCall.args[0].should.be.a('string').that.is.eql('kafka-test-topic');
+            partitionerSpy.lastCall.args[0].should.be.a('string').that.is.eql(CST.TEST_TOPIC);
             partitionerSpy.lastCall.args[1].should.be.an('array').and.have.length(3);
             partitionerSpy.lastCall.args[1][0].should.be.an('object');
             partitionerSpy.lastCall.args[1][0].should.have.property('partitionId').that.is.a('number');
@@ -185,7 +185,7 @@ describe('Producer', function () {
         });
         return _producer.init().then(function () {
             return _producer.send({
-                topic: 'kafka-test-topic',
+                topic: CST.TEST_TOPIC,
                 message: {
                     value: 'Hello!'
                 }
@@ -194,7 +194,7 @@ describe('Producer', function () {
         .then(function (result) {
             result.should.be.an('array').and.have.length(1);
             result[0].should.be.an('object');
-            result[0].should.have.property('topic', 'kafka-test-topic');
+            result[0].should.have.property('topic', CST.TEST_TOPIC);
             result[0].should.have.property('partition', 1);
             result[0].should.have.property('offset').that.is.a('number');
             result[0].should.have.property('error', null);
@@ -212,7 +212,7 @@ describe('Producer', function () {
         });
         return _producer.init().then(function () {
             return _producer.send({
-                topic: 'kafka-test-topic',
+                topic: CST.TEST_TOPIC,
                 message: {
                     value: 'Hello!'
                 }
@@ -221,7 +221,7 @@ describe('Producer', function () {
         .then(function (result) {
             result.should.be.an('array').and.have.length(1);
             result[0].should.be.an('object');
-            result[0].should.have.property('topic', 'kafka-test-topic');
+            result[0].should.have.property('topic', CST.TEST_TOPIC);
             result[0].should.have.property('partition', 2);
             result[0].should.have.property('offset').that.is.a('number');
             result[0].should.have.property('error', null);
@@ -258,14 +258,14 @@ describe('Producer', function () {
         return _producer.init().then(function () {
             return Promise.all([
                 _producer.send({
-                    topic: 'kafka-test-topic',
+                    topic: CST.TEST_TOPIC,
                     partition: 0,
                     message: {
                         value: '12345'
                     }
                 }),
                 _producer.send({
-                    topic: 'kafka-test-topic',
+                    topic: CST.TEST_TOPIC,
                     partition: 0,
                     message: {
                         value: '12345'
@@ -291,14 +291,14 @@ describe('Producer', function () {
         return _producer.init().then(function () {
             return Promise.all([
                 _producer.send({
-                    topic: 'kafka-test-topic',
+                    topic: CST.TEST_TOPIC,
                     partition: 0,
                     message: {
                         value: '12345'
                     }
                 }),
                 _producer.send({
-                    topic: 'kafka-test-topic',
+                    topic: CST.TEST_TOPIC,
                     partition: 0,
                     message: {
                         value: '12345'
@@ -324,14 +324,14 @@ describe('Producer', function () {
         return _producer.init().then(function () {
             return Promise.all([
                 _producer.send({
-                    topic: 'kafka-test-topic',
+                    topic: CST.TEST_TOPIC,
                     partition: 0,
                     message: {
                         value: '12345'
                     }
                 }, { batch: { size: 10 } }),
                 _producer.send({
-                    topic: 'kafka-test-topic',
+                    topic: CST.TEST_TOPIC,
                     partition: 0,
                     message: {
                         value: '12345'
@@ -357,14 +357,14 @@ describe('Producer', function () {
         return _producer.init().then(function () {
             return Promise.all([
                 _producer.send({
-                    topic: 'kafka-test-topic',
+                    topic: CST.TEST_TOPIC,
                     partition: 0,
                     message: {
                         value: '12345'
                     }
                 }, { batch: { size: 100 } }),
                 _producer.send({
-                    topic: 'kafka-test-topic',
+                    topic: CST.TEST_TOPIC,
                     partition: 0,
                     message: {
                         value: '12345'
@@ -390,7 +390,7 @@ describe('Producer', function () {
 
         return _producer.init().then(function () {
             return _producer.send({
-                topic: 'kafka-test-topic',
+                topic: CST.TEST_TOPIC,
                 partition: 0,
                 message: {
                     value: '12345'
@@ -399,7 +399,7 @@ describe('Producer', function () {
             .delay(100)
             .then(function () {
                 return _producer.send({
-                    topic: 'kafka-test-topic',
+                    topic: CST.TEST_TOPIC,
                     partition: 0,
                     message: {
                         value: '12345'

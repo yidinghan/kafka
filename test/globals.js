@@ -16,3 +16,7 @@ global.chai.use(chaiAsPromised);
 // https://github.com/domenic/sinon-chai
 var sinonChai = require('sinon-chai');
 global.chai.use(sinonChai);
+
+global.CST = {
+    TEST_TOPIC: 'kafka-test-topic',
+};
